@@ -15,11 +15,11 @@ const SAMPLE_XML = `<?xml version="1.0"?>
 </note>`
 const SAMPLE_XSD = `<?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name=\"note\">
+  <xs:element name="note">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name=\"to\" type=\"xs:string\"/>
-        <xs:element name=\"from\" type=\"xs:string\"/>
+        <xs:element name="to" type="xs:string"/>
+        <xs:element name="from" type="xs:string"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -39,8 +39,12 @@ export default function App() {
         try {
             const r = await validateXml(xml, xsds)
             setResp(r)
-        } catch (e: any) {
-            setErr(e.message || String(e))
+        } catch (e) {
+            if (e instanceof Error) {
+                setErr(e.message || String(e))
+            } else {
+                setErr(String(e))
+            }
             setResp(null)
         } finally {
             setBusy(false)
@@ -55,11 +59,14 @@ export default function App() {
     const reportableIssues = issues.filter(issue => ['warning', 'error', 'fatal'].includes(issue.severity));
 
     function onJump(line?: number, column?: number) {
-        ;(window as any).xmlEditor?.reveal(line, column)
+        /* eslint-disable @typescript-eslint/no-explicit-any */
+        (window as any).xmlEditor?.reveal(line, column);
+        /* eslint-enable @typescript-eslint/no-explicit-any */
     }
 
     async function handleValidateClick() {
-        validate() }
+        validate()
+    }
 
     function onDropXml(next: string) { setXml(next) }
     function onDropXsds(newOnes: XsdFile[]) { setXsds([...xsds, ...newOnes]) }
@@ -118,7 +125,9 @@ export default function App() {
             </main>
 
             <footer className="foot">
+                {/* eslint-disable @typescript-eslint/no-explicit-any */}
                 <small>v{(globalThis as any).__APP_VERSION__} · Ctrl/Cmd+Enter to validate · Never uploads files automatically</small>
+                {/* eslint-enable @typescript-eslint/no-explicit-any */}
             </footer>
         </div>
     )

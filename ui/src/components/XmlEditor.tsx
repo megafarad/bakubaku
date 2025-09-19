@@ -37,7 +37,9 @@ export default function XmlEditor({
         const newDecos = issues
             .filter((i) => i.line && i.column)
             .map((i) => ({
+                /* eslint-disable @typescript-eslint/no-explicit-any */
                 range: new (window as any).monaco.Range(i.line!, 1, i.line!, 1),
+                /* eslint-enable @typescript-eslint/no-explicit-any */
                 options: {
                     isWholeLine: true,
                     linesDecorationsClassName: i.severity === 'warning' ? 'gutter-warn' : 'gutter-error',
@@ -51,7 +53,8 @@ export default function XmlEditor({
 
     // Expose a helper on window for quick debugging
     useEffect(() => {
-        ;(window as any).xmlEditor = {
+        /* eslint-disable @typescript-eslint/no-explicit-any */
+        (window as any).xmlEditor = {
             reveal(line?: number, column?: number) {
                 const ed = editorRef.current
                 if (!ed || !line) return
@@ -60,6 +63,7 @@ export default function XmlEditor({
                 ed.focus()
             }
         } as XmlEditorHandle
+        /* eslint-enable @typescript-eslint/no-explicit-any */
     }, [])
 
     return (

@@ -9,7 +9,7 @@ export default function XsdList({ xsds, setXsds }: { xsds: XsdFile[]; setXsds: (
 
     useEffect(() => {
         if (!active && xsds[0]) setActiveId(xsds[0].id)
-    }, [xsds])
+    }, [xsds, active])
 
     function addEmpty() {
         const n = xsds.length + 1
