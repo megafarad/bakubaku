@@ -4,6 +4,9 @@ on:
     branches:
       - master
 
+env:
+  VITE_API_BASE: https://bakubaku.megafarad.com
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,4 +33,16 @@ jobs:
       - name: Compile and Test
         run: sbt clean compile test
 
+      - name: Build latest Docker image
+        run: docker build -t registry.digitalocean.com/megafarad/bakubaku:latest .
 
+      - name: Provide doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITAL_OCEAN_TOKEN }}
+
+      - name: Log into DigitalOcean Registry
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Push image to DigitalOcean Registry
+        run: docker push registry.digitalocean.com/megafarad/bakubaku:latest
