@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build --emptyOutDir",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest --passWithNoTests"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
@@ -27,6 +28,7 @@
     "kill-port": "^2.0.1",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.39.1",
-    "vite": "^7.1.2"
+    "vite": "^7.1.2",
+    "vitest": "^3.2.4"
   }
 }

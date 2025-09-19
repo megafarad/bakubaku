@@ -17,6 +17,11 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Setup SBT
         uses: JTalk/setup-sbt@v1
         with:
