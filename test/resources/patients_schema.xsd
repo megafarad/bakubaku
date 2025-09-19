@@ -1,0 +1,69 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+    <xs:complexType name="identifier">
+        <xs:attribute name="root" type="xs:string"/>
+        <xs:attribute name="extension" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:simpleType name="name">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:complexType name="time">
+        <xs:attribute name="value" type="xs:string"/>
+    </xs:complexType>
+    <xs:simpleType name="given">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="family">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:complexType name="organization">
+        <xs:sequence>
+            <xs:element name="id" type="identifier" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="name" type="name" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="patientRole">
+        <xs:sequence>
+            <xs:element name="id" type="identifier" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="patient" type="patient" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="providerOrganization" type="organization" minOccurs="1" maxOccurs="1"
+            />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="pname">
+        <xs:all>
+            <xs:element name="given" type="name" minOccurs="1"/>
+            <xs:element name="family"  type="name" minOccurs="1"/>
+        </xs:all>
+    </xs:complexType>
+        <xs:complexType name="code">
+
+            <xs:attribute name="code" type="xs:string"/>
+            <xs:attribute name="codeSystem" type="xs:string"/>
+        </xs:complexType>
+    
+
+    <xs:complexType name="patient">
+
+        <xs:sequence>
+            <xs:element name="name" type="pname" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="administrativeGenderCode" type="code" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="birthTime" type="time" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="Patients">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="patientRole" type="patientRole" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -1,0 +1,12 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+GET     /                           com.megafarad.bakubaku.controllers.ApplicationController.index
+POST    /api/validate               com.megafarad.bakubaku.controllers.ValidateController.validate
+GET     /api/csrfToken              com.megafarad.bakubaku.controllers.CSRFController.getToken
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path = "/public/assets", file)
+GET     /*file                      com.megafarad.bakubaku.controllers.ApplicationController.assetOrDefault(file)
